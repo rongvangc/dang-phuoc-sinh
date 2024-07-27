@@ -22,6 +22,7 @@ import { cn } from "../lib/utils";
 const ProblemTwo = () => {
   const [openFrom, setOpenFrom] = useState(false);
   const [openTo, setOpenTo] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
   const [fromValue, setFromValue] = useState<Currency | null>(null);
   const [toValue, setToValue] = useState<Currency | null>(null);
   const [amount, setAmount] = useState<string>("");
@@ -36,6 +37,7 @@ const ProblemTwo = () => {
   );
 
   const handleChangeAmount = (e: ChangeEvent<HTMLInputElement>) => {
+    setIsDirty(true);
     const inputValue = e.target.value;
     const numericRegex = /^[0-9]*$/;
 
@@ -71,9 +73,14 @@ const ProblemTwo = () => {
             id="amount"
             className="mt-2"
             value={amount}
-            placeholder="1000"
+            placeholder="Please input your number"
             onChange={handleChangeAmount}
           />
+          {!amount && isDirty && (
+            <span className="text-red-500 text-xs">
+              Please input your number
+            </span>
+          )}
         </div>
 
         <div className="flex w-full justify-between gap-4 items-center">
